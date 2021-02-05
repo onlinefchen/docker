@@ -14,6 +14,7 @@ RUN apt-get update && apt-get install -y \
     build-essential \
     git ccache automake flex lzop bison \ 
     gperf build-essential zip curl \
+    qemu-system-aarch64 \
     zlib1g-dev \
     g++-multilib \
     libxml2-utils bzip2 libbz2-dev \ 
@@ -64,15 +65,17 @@ RUN mkdir bin
 COPY cs bin
 COPY host.pub host.pub
 COPY vimrc .vim/vimrc
+COPY bashrc .bashrc
 RUN git config --global user.name "Chen Feng"
 RUN git config --global user.email "puck.chen@foxmail.com"
 RUN git config --global core.editor vim
 RUN mkdir -p .ssh
+RUN mkdir -p /home/puck/.vim/cscope
 RUN cat host.pub >> .ssh/authorized_keys
 RUN rm host.pub
 RUN git clone https://github.com/VundleVim/Vundle.vim.git .vim/bundle/Vundle.vim
 RUN vim +PluginInstall +qall
 RUN vim +PluginInstall +qall
 
-# alias mydocker="docker run -d --name mydocker -it -v /Users/fengchen/code:/home/puck/work mydocker -p -p 2022:22"
+# alias mydocker="docker run --name mydocker -it -v /Users/fengchen/code:/home/puck/work mydocker"
 # alias linux="docker exec -it mydocker bash"
